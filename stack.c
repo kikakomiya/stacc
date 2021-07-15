@@ -1,39 +1,54 @@
-// stack
-// LIFO
-// main operations: pushing and popping
-// use an array
-// stack will be of type int
-
 #include <stdio.h>
-
-struct stacc
-{
-    int maxsize;
-    int total;
-    int items[128];
-};
-
-void push(struct stacc stack, int item)
-{
-    stack.items[stack.total] = item;
-    printf("%d pushed\n", item);
-    stack.total++;
-}
-
-int pop(struct stacc stack)
-{
-    int item = stack.items[stack.total-1];
-    printf("%d removed\n", item);
-    stack.total--;
-    return item;
-}
+#include <stdlib.h>
 
 int main()
 {
-    struct stacc stack;
-    push(stack, 3);
-    push(stack, 7);
-    push(stack, 1423);
-    pop(stack);
+    // Behold, a stack
+    // Who knew it was so easy?
+    int total = 0;
+    int stacc[256];
+
+    for (;;)
+    {
+        printf("1 - Push a number\n2 - Pop the top\n-1 - Exit\nChoose operation: ");
+        int ops;
+        scanf("%d", &ops);
+
+        switch (ops)
+        {
+            case -1:
+                exit(0);
+            case 1:
+                if (total == 256)
+                {
+                    printf("ERR: stack full\n");
+                    break;
+                }
+                else
+                {
+                    printf("Enter number you want to push: ");
+                    int push;
+                    scanf("%d", &push);
+                    stacc[total] = push;
+                    total++;
+                    break;
+                }
+            case 2:
+                if (total == 0)
+                {
+                    printf("ERR: stack empty\n");
+                    break;
+                }
+                else
+                {
+                    printf("%d\n", stacc[total-1]);
+                    total--;
+                    break;
+                }
+            default:
+                printf("Invalid choice\n");
+                break;
+        }
+    }
     return 0;
 }
